@@ -1,4 +1,4 @@
-import express from "express";
+import express, {Request, Response} from "express";
 const router = express.Router()
 
 import {
@@ -25,34 +25,34 @@ const functions: {[index: string]:any} = {
 }
 
 router.route('/router')
-    .get((req: any, res: any) => {
+    .get((req: Request, res: Response) => {
         try {
-            const funcName: string = req.query.action
+            const funcName: string = req.query.action as string
             functions[funcName](req, res)
         } catch (e) {
             res.status(404).json({error: 'not found'})
         }
     })
-    .post((req: any, res: any) => {
+    .post((req: Request, res: Response) => {
         try {
             if(Object.keys(req.query).length == 0) return logout(req, res);
-            const funcName: string = req.query.action
+            const funcName: string = req.query.action as string
             functions[funcName](req, res)
         } catch (e) {
             res.status(404).json({error: 'not found'})
         }
     })
-    .put((req: any, res: any) => {
+    .put((req: Request, res: Response) => {
         try {
-            const funcName: string = req.query.action
+            const funcName: string = req.query.action as string
             functions[funcName](req, res)
         } catch (e) {
             res.status(404).json({error: 'not found'})
         }
     })
-    .delete((req: any, res: any) => {
+    .delete((req: Request, res: Response) => {
         try {
-            const funcName: string = req.query.action
+            const funcName: string = req.query.action as string
             functions[funcName](req, res)
         } catch (e) {
             res.status(404).json({error: 'not found'})
