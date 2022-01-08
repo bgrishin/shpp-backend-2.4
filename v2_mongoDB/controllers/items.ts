@@ -1,6 +1,7 @@
 import { TaskModel } from "../schemas/tasksSchemas";
+import {Request, Response} from "express";
 
-export async function getItems(req: any, res: any) {
+export async function getItems(req: Request, res: Response) {
     try {
         if(!req.session.Id) return res.status(403).json({error: 'forbidden'})
         const Tasks = await TaskModel.find({ Userid: req.session.Id})
@@ -11,7 +12,7 @@ export async function getItems(req: any, res: any) {
     }
 }
 
-export async function createItem(req: any, res: any) {
+export async function createItem(req: Request, res: Response) {
     try {
         if(!req.session.Id && !req.body.hasOwnProperty('text')) return res.status(400).send('400 Bad Request')
         req.body.Userid = req.session.Id
@@ -23,7 +24,7 @@ export async function createItem(req: any, res: any) {
     }
 }
 
-export async function editItem(req: any, res: any) {
+export async function editItem(req: Request, res: Response) {
     try {
         if (!req.session.Id) return res.status(400).send({ error: "Bad Request" })
         const task = await TaskModel.findOneAndUpdate({ _id: req.body._id }, req.body, {runValidators: true})
@@ -35,7 +36,7 @@ export async function editItem(req: any, res: any) {
     }
 }
 
-export async function deleteItem(req: any, res: any) {
+export async function deleteItem(req: Request, res: Response) {
     try {
         if (!req.session.Id && !req.body.hasOwnProperty('_id')) return res.status(400).json({ "error": "Bad Request"})
         const task = await TaskModel.findOneAndDelete({ _id: req.body._id })
