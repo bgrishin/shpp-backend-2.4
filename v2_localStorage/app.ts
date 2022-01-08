@@ -28,6 +28,12 @@ app.use(cors({
     credentials: true
 }))
 
+declare module 'express-session' {
+    interface SessionData {
+        Id: string
+    }
+}
+
 app.use('/api/v2', router)
 
 app.listen(port, () => {
