@@ -17,6 +17,12 @@ app.use(session({
     saveUninitialized: false
 }))
 
+declare module 'express-session' {
+    interface SessionData {
+        Id: string
+    }
+}
+
 app.use(express.json())
 app.use(express.static('public'))
 app.use(cors({
