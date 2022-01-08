@@ -1,6 +1,12 @@
 import { TaskModel } from "../schemas/tasksSchemas";
 import {Request, Response} from "express";
 
+declare module 'express-session' {
+    interface SessionData {
+        Id: string
+    }
+}
+
 export async function getItems(req: Request, res: Response) {
     try {
         if(!req.session!.Id) return res.status(403).json({error: 'forbidden'})
