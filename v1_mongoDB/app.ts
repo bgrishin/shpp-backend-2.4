@@ -27,6 +27,12 @@ app.use(express.json())
 app.use(express.static('public'))
 app.use('/api/v1', routerItems, routerAuth)
 
+declare module 'express-session' {
+    interface SessionData {
+        Id: string
+    }
+}
+
 app.use(cors({
     origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
