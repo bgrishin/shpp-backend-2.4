@@ -10,7 +10,7 @@ export function getTasksService(Id: string): Task[] | undefined {
     return Tasks
 }
 
-export function addItemService(Id: string, text: string): Task {
+export function addItemService(Id: string | undefined, text: string): Task {
     const db: Database = JSON.parse(fs.readFileSync(DatabasePath, 'utf-8'))
     const userInd: number = db.users.findIndex((data: User) => data.id === Id)
     const id: string = crypto.randomBytes(10).toString('hex')
@@ -24,7 +24,7 @@ export function addItemService(Id: string, text: string): Task {
     return task
 }
 
-export function changeItemService(Id: string, NewTask: Task): object | undefined {
+export function changeItemService(Id: string | undefined, NewTask: Task): object | undefined {
     const db: Database = JSON.parse(fs.readFileSync(DatabasePath, 'utf-8'))
     const userInd: number = db.users.findIndex((data: User) => data.id === Id)
     const ChangingTaskIndex: number = db.users[userInd].tasks.findIndex((task: Task) => task.id === NewTask.id)
@@ -34,7 +34,7 @@ export function changeItemService(Id: string, NewTask: Task): object | undefined
     return {success: true}
 }
 
-export function deleteItemService(Id: string, TaskId: string): object | undefined {
+export function deleteItemService(Id: string | undefined, TaskId: string): object | undefined {
     const db = JSON.parse(fs.readFileSync(DatabasePath, 'utf-8'))
     const userInd: number = db.users.findIndex((user: User) => user.id === Id)
     const DeleteIndex: number = db.users[userInd].tasks.findIndex((task: Task) => task.id === TaskId)
