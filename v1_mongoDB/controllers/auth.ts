@@ -1,6 +1,12 @@
 import { UserModel } from "../schemas/usersSchemas";
 import {Request, Response} from "express";
 
+declare module 'express-session' {
+    interface SessionData {
+        Id: string
+    }
+}
+
 export async function login(req: Request, res: Response) {
     const { login, pass } = req.body
     if (!(login && pass)) return res.status(400).json({ok: false})
