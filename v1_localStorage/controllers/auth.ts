@@ -1,6 +1,7 @@
 import { loginOption, register } from "../services/auth";
+import {Request, Response} from "express";
 
-export function loginAcc(req: any, res: any) {
+export function loginAcc(req: Request, res: Response) {
     const { login, pass } = req.body
     if (!(login && pass)) return res.status(404).json({ok: false })
     const Id: string | undefined = loginOption(login, pass)
@@ -9,7 +10,7 @@ export function loginAcc(req: any, res: any) {
     res.status(200).json({ ok: true })
 }
 
-export function registerAcc(req: any, res: any) {
+export function registerAcc(req: Request, res: Response) {
     const { login, pass } = req.body
     if (!(login && pass)) return res.status(500).send('Internal Server Error')
     const Id: string | undefined = register(login, pass)
@@ -18,7 +19,7 @@ export function registerAcc(req: any, res: any) {
     res.status(200).json({ ok: true })
 }
 
-export function logout(req: any, res: any) {
+export function logout(req: Request, res: Response) {
     req.session.destroy((err: any) => {
         if(!err) res.clearCookie('connect.sid').json({ok: true})
     })
